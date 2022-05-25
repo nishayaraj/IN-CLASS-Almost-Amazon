@@ -1,6 +1,7 @@
 import { deleteBook } from '../../api/bookData';
 import viewBookDetails from '../../api/mergedData';
 import { showBooks } from '../components/pages/books';
+import viewBook from '../components/pages/viewBook';
 
 const domEvents = () => {
   document.querySelector('#main-container').addEventListener('click', (e) => {
@@ -27,7 +28,7 @@ const domEvents = () => {
     if (e.target.id.includes('view-book-btn')) {
       const [, bookFirebaseKey] = e.target.id.split('--');
 
-      viewBookDetails(bookFirebaseKey).then((bookAuthorObject) => viewBookDetails(bookAuthorObject));
+      viewBookDetails(bookFirebaseKey).then((bookAuthorObject) => viewBook(bookAuthorObject));
     }
 
     // FIXME: ADD CLICK EVENT FOR DELETING AN AUTHOR
