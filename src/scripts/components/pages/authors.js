@@ -4,12 +4,14 @@ import renderToDOM from '../../helpers/renderToDom';
 const showAuthors = (array) => {
   clearDom();
 
+  const parsedAuthorArray = Object.values(array);
+
   const btnString = '<button class="btn btn-success btn-lg mb-4" id="add-author-btn">Add An Author</button>';
 
   renderToDOM('#add-button', btnString);
 
   let domString = '';
-  array.forEach((item) => {
+  parsedAuthorArray.forEach((item) => {
     domString += `
     <div class="card" style="width: 18rem;">
       <div class="card-body">
