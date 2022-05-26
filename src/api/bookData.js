@@ -40,6 +40,13 @@ const booksOnSale = () => new Promise((resolve, reject) => {
     .catch((error) => reject(error));
 });
 
+// FILTER FAVORITE AUTHORS
+const favoriteAuthors = () => new Promise((resolve, reject) => {
+  axios.get(`${dbUrl}/authors.json?orderBy="favorite"&equalTo=true`)
+    .then((response) => resolve(Object.values(response.data)))
+    .catch((error) => reject(error));
+});
+
 // TODO: STRETCH...SEARCH BOOKS
 
 export {
@@ -48,5 +55,6 @@ export {
   booksOnSale,
   deleteBook,
   getSingleBook,
-  updateBook
+  updateBook,
+  favoriteAuthors
 };
