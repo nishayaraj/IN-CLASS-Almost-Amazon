@@ -48,15 +48,15 @@ const domEvents = () => {
     if (e.target.id.includes('add-author-btn')) {
       console.warn('ADD AUTHOR');
     }
+
+    //  CLICK EVENT FOR VIEW AUTHOR BTN
+    if (e.target.id.includes('view-author-btn')) {
+      const [, authorFirebaseKey] = e.target.id.split('--');
+
+      viewAuthorDetails(authorFirebaseKey).then((authorBooksObject) => viewBook(authorBooksObject));
+    }
     // FIXME: ADD CLICK EVENT FOR EDITING AN AUTHOR
   });
 };
-
-//  CLICK EVENT FOR VIEW AUTHOR BTN
-// if (e.target.id.includes('view-author-btn')) {
-//   const [, authorFirebaseKey] = e.target.id.split('--');
-
-//   viewAuthorDetails(authorFirebaseKey).then((authorBooksObject) => viewBook(authorBooksObject));
-// }
 
 export default domEvents;
