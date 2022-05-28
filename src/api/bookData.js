@@ -27,24 +27,24 @@ const getSingleBook = (firebaseKey) => new Promise((resolve, reject) => {
     .catch((error) => reject(error));
 });
 
-// TODO: CREATE BOOK ****************************
-const createBook = () => new Promise((resolve, reject) => {
-  axios.post(`${dbUrl}/books.json`, {
-    author_id: '-MiBulenBnY8by9Xn7q1',
-    description: '',
-    firebaseKey: '-MiBuqoYjFwbXyA8oiiw',
-    image: 'https://images-na.ssl-images-amazon.com/images/I/A1Cu4ywUeyL.jpg',
-    price: '25.00',
-    sale: true,
-    title: 'The Underground Railroad',
-    uid: ''
-  })
-    .then((response) => resolve(response.data))
-    .catch((error) => reject(error));
+// TODO: CREATE BOOK
+const createBook = (bookObj) => new Promise((resolve, reject) => {
+  axios.post(`${dbUrl}/books.json`, bookObj)
+    .then((response) => {
+      const payload = { firebaseKey: response.data.name };
+      axios.patch(`${dbUrl}/books/${response.data.name}.json`, payload)
+        .then(() => {
+          getBooks().then(resolve);
+        });
+    }).catch(reject);
 });
 
 // TODO: UPDATE BOOK
-const updateBook = () => {};
+const updateBook = (bookObj) => new Promise((resolve, reject) => {
+  axios.patch(`${dbUrl}/books/${bookObj.firebaseKey}.json`, bookObj)
+    .then((response) => resolve(Object.values(response.data)))
+    .catch((error) => reject(error));
+});
 
 // TODO: FILTER BOOKS ON SALE
 const booksOnSale = () => new Promise((resolve, reject) => {

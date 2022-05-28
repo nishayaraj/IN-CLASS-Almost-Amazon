@@ -1,6 +1,6 @@
 // eslint-disable-next-line no-unused-vars
-import { getAuthorBooks, getSingleAuthor } from './authorData';
-import { getSingleBook } from './bookData';
+import { getAuthorBooks, getSingleAuthor, deleteSingleAuthor } from './authorData';
+import { deleteBook, getSingleBook } from './bookData';
 
 const viewBookDetails = (bookFirebaseKey) => new Promise((resolve, reject) => {
   getSingleBook(bookFirebaseKey)
@@ -30,4 +30,16 @@ const viewAuthorDetails = (authorFirebaseKey) => new Promise((resolve, reject) =
     }).catch((error) => reject(error));
 });
 
-export { viewBookDetails, viewAuthorDetails };
+const deleteAuthorBooks = (authorId) => new Promise((resolve, reject) => {
+  getAuthorBooks(authorId).then((booksArray) => {
+    console.warn(booksArray, 'Author Books');
+    const deleteBookPromises = booksArray.map((book) => deleteBook(book.firebaseKey));
+    // console.warn(deleteBookPromises);
+
+    Promise.all(deleteBookPromises).then(() => {
+      deleteSingleAuthor(authorId).then(resolve);
+    });
+  }).catch((error) => reject(error));
+});
+
+export { viewBookDetails, viewAuthorDetails, deleteAuthorBooks };

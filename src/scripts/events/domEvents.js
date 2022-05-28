@@ -1,11 +1,14 @@
 import { deleteBook } from '../../api/bookData';
-import { viewBookDetails, viewAuthorDetails } from '../../api/mergedData';
+import { viewBookDetails, viewAuthorDetails, deleteAuthorBooks } from '../../api/mergedData';
+// import { deleteAuthorBooks } from '../../api/mergedData';
 // import { showAuthors } from '../components/pages/authors';
 import { showBooks } from '../components/pages/books';
 import viewBook from '../components/pages/viewBook';
 import viewAllBooksOfAuthor from '../components/pages/viewAllBooksOfAuthor';
-import { deleteSingleAuthor } from '../../api/authorData';
+// import { deleteSingleAuthor } from '../../api/authorData';
 import { showAuthors } from '../components/pages/authors';
+import addBookForm from '../components/forms/addBookForm';
+import addAuthorForm from '../components/forms/addAuthorForm';
 
 const domEvents = () => {
   document.querySelector('#main-container').addEventListener('click', (e) => {
@@ -21,6 +24,8 @@ const domEvents = () => {
     // TODO: CLICK EVENT FOR SHOWING FORM FOR ADDING A BOOK
     if (e.target.id.includes('add-book-btn')) {
       console.warn('ADD BOOK');
+      const [, bookFirebaseKey] = e.target.id.split('--');
+      addBookForm(bookFirebaseKey).then((bookAuthorObject) => showBooks(bookAuthorObject));
     }
 
     // TODO: CLICK EVENT EDITING/UPDATING A BOOK
@@ -39,15 +44,18 @@ const domEvents = () => {
     if (e.target.id.includes('delete-author-btn')) {
       // eslint-disable-next-line no-alert
       if (window.confirm('Want to delete?')) {
-        const [, firebaseKey] = e.target.id.split('--');
+        // const [, firebaseKey] = e.target.id.split('--');
 
-        deleteSingleAuthor(firebaseKey).then((authorsArray) => showAuthors(authorsArray));
+        // deleteSingleAuthor(firebaseKey).then((authorsArray) => showAuthors(authorsArray));
+        const [, firebaseKey] = e.target.id.split('--');
+        deleteAuthorBooks(firebaseKey).then(showAuthors);
       }
     }
 
     // FIXME: ADD CLICK EVENT FOR SHOWING FORM FOR ADDING AN AUTHOR
     if (e.target.id.includes('add-author-btn')) {
       console.warn('ADD AUTHOR');
+      addAuthorForm();
     }
 
     //  CLICK EVENT FOR VIEW AUTHOR BTN
