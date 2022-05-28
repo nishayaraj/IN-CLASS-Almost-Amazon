@@ -3,6 +3,7 @@ import { viewBookDetails, viewAuthorDetails } from '../../api/mergedData';
 // import { showAuthors } from '../components/pages/authors';
 import { showBooks } from '../components/pages/books';
 import viewBook from '../components/pages/viewBook';
+import viewAllBooksOfAuthor from '../components/pages/viewAllBooksOfAuthor';
 import { deleteSingleAuthor } from '../../api/authorData';
 import { showAuthors } from '../components/pages/authors';
 
@@ -53,7 +54,8 @@ const domEvents = () => {
     if (e.target.id.includes('view-author-btn')) {
       const [, authorFirebaseKey] = e.target.id.split('--');
 
-      viewAuthorDetails(authorFirebaseKey).then((authorBooksObject) => viewBook(authorBooksObject));
+      viewAuthorDetails(authorFirebaseKey)
+        .then((authorBooksObject) => viewAllBooksOfAuthor(authorBooksObject));
     }
     // FIXME: ADD CLICK EVENT FOR EDITING AN AUTHOR
   });
