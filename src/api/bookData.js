@@ -7,7 +7,13 @@ const dbUrl = firebaseConfig.databaseURL;
 // TODO: GET BOOKS
 const getBooks = () => new Promise((resolve, reject) => {
   axios.get(`${dbUrl}/books.json`)
-    .then((response) => resolve(Object.values(response.data)))
+    .then((response) => {
+      if (response.data) {
+        resolve(Object.values(response.data));
+      } else {
+        resolve([]);
+      }
+    })
     .catch((error) => reject(error));
 });
 
@@ -42,7 +48,7 @@ const createBook = (bookObj) => new Promise((resolve, reject) => {
 // TODO: UPDATE BOOK
 const updateBook = (bookObj) => new Promise((resolve, reject) => {
   axios.patch(`${dbUrl}/books/${bookObj.firebaseKey}.json`, bookObj)
-    .then((response) => resolve(Object.values(response.data)))
+    .then(() => getBooks().then(resolve))
     .catch((error) => reject(error));
 });
 

@@ -1,4 +1,4 @@
-import { deleteBook } from '../../api/bookData';
+import { deleteBook, getSingleBook } from '../../api/bookData';
 import { viewBookDetails, viewAuthorDetails, deleteAuthorBooks } from '../../api/mergedData';
 // import { deleteAuthorBooks } from '../../api/mergedData';
 // import { showAuthors } from '../components/pages/authors';
@@ -30,8 +30,9 @@ const domEvents = () => {
 
     // TODO: CLICK EVENT EDITING/UPDATING A BOOK
     if (e.target.id.includes('edit-book-btn')) {
-      console.warn('EDIT BOOK', e.target.id);
-      console.warn(e.target.id.split('--'));
+      const [, firebaseKey] = e.target.id.split('--');
+
+      getSingleBook(firebaseKey).then((bookObj) => addBookForm(bookObj));
     }
     // TODO: CLICK EVENT FOR VIEW BOOK DETAILS
     if (e.target.id.includes('view-book-btn')) {
