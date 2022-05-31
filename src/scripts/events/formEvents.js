@@ -1,6 +1,8 @@
 /* eslint-disable no-console */
 import { createBook, updateBook } from '../../api/bookData';
 import { showBooks } from '../components/pages/books';
+import { showAuthors } from '../components/pages/authors';
+import { createAuthor, updateAuthor } from '../../api/authorData';
 
 const formEvents = () => {
   document.querySelector('#main-container').addEventListener('submit', (e) => {
@@ -36,9 +38,27 @@ const formEvents = () => {
 
     // FIXME: ADD CLICK EVENT FOR SUBMITTING FORM FOR ADDING AN AUTHOR
     if (e.target.id.includes('submit-author')) {
-      console.warn('CLICKED SUBMIT AUTHOR');
+      const authorObject = {
+        email: document.querySelector('#email').value,
+        first_name: document.querySelector('#first_name').value,
+        last_name: document.querySelector('#last_name').value,
+        favorite: document.querySelector('#favorite').checked
+      };
+      createAuthor(authorObject).then(showAuthors);
     }
     // FIXME:ADD CLICK EVENT FOR EDITING AN AUTHOR
+    if (e.target.id.includes('update-author')) {
+      const [, firebaseKey] = e.target.id.split('--');
+      const authorObject = {
+        email: document.querySelector('#email').value,
+        first_name: document.querySelector('#first_name').value,
+        last_name: document.querySelector('#last_name').value,
+        favorite: document.querySelector('#favorite').checked,
+        firebaseKey
+      };
+
+      updateAuthor(authorObject).then(showAuthors);
+    }
   });
 };
 

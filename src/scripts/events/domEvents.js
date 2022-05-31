@@ -9,6 +9,7 @@ import viewAllBooksOfAuthor from '../components/pages/viewAllBooksOfAuthor';
 import { showAuthors } from '../components/pages/authors';
 import addBookForm from '../components/forms/addBookForm';
 import addAuthorForm from '../components/forms/addAuthorForm';
+import { getSingleAuthor } from '../../api/authorData';
 
 const domEvents = () => {
   document.querySelector('#main-container').addEventListener('click', (e) => {
@@ -37,7 +38,6 @@ const domEvents = () => {
     // TODO: CLICK EVENT FOR VIEW BOOK DETAILS
     if (e.target.id.includes('view-book-btn')) {
       const [, bookFirebaseKey] = e.target.id.split('--');
-
       viewBookDetails(bookFirebaseKey).then((bookAuthorObject) => viewBook(bookAuthorObject));
     }
 
@@ -67,6 +67,11 @@ const domEvents = () => {
         .then((authorBooksObject) => viewAllBooksOfAuthor(authorBooksObject));
     }
     // FIXME: ADD CLICK EVENT FOR EDITING AN AUTHOR
+    if (e.target.id.includes('edit-author-btn')) {
+      const [, firebaseKey] = e.target.id.split('--');
+
+      getSingleAuthor(firebaseKey).then((authorObj) => addAuthorForm(authorObj));
+    }
   });
 };
 
