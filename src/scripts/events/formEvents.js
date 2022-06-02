@@ -4,7 +4,7 @@ import { showBooks } from '../components/pages/books';
 import { showAuthors } from '../components/pages/authors';
 import { createAuthor, updateAuthor } from '../../api/authorData';
 
-const formEvents = () => {
+const formEvents = (uid) => {
   document.querySelector('#main-container').addEventListener('submit', (e) => {
     e.preventDefault();
     // TODO: CLICK EVENT FOR SUBMITTING FORM FOR ADDING A BOOK
@@ -15,7 +15,8 @@ const formEvents = () => {
         price: document.querySelector('#price').value,
         description: document.querySelector('#description').value,
         sale: document.querySelector('#sale').checked,
-        author_id: document.querySelector('#author_id').value // document.querySelector('#author_id').value || '',
+        author_id: document.querySelector('#author_id').value, // document.querySelector('#author_id').value || '',
+        uid
       };
       createBook(bookObject).then((booksArray) => showBooks(booksArray));
     }
@@ -30,7 +31,8 @@ const formEvents = () => {
         description: document.querySelector('#description').value,
         sale: document.querySelector('#sale').checked,
         author_id: document.querySelector('#author_id').value,
-        firebaseKey
+        firebaseKey,
+        uid
       };
 
       updateBook(bookObject).then(showBooks);
@@ -42,10 +44,12 @@ const formEvents = () => {
         email: document.querySelector('#email').value,
         first_name: document.querySelector('#first_name').value,
         last_name: document.querySelector('#last_name').value,
-        favorite: document.querySelector('#favorite').checked
+        favorite: document.querySelector('#favorite').checked,
+        uid
       };
-      createAuthor(authorObject).then(showAuthors);
+      createAuthor(authorObject).then((authors) => showAuthors(authors));
     }
+
     // FIXME:ADD CLICK EVENT FOR EDITING AN AUTHOR
     if (e.target.id.includes('update-author')) {
       const [, firebaseKey] = e.target.id.split('--');
@@ -54,7 +58,8 @@ const formEvents = () => {
         first_name: document.querySelector('#first_name').value,
         last_name: document.querySelector('#last_name').value,
         favorite: document.querySelector('#favorite').checked,
-        firebaseKey
+        firebaseKey,
+        uid,
       };
 
       updateAuthor(authorObject).then(showAuthors);
