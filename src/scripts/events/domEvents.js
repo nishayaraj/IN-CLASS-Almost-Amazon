@@ -70,8 +70,12 @@ const domEvents = () => {
     if (e.target.id.includes('update-author')) {
       console.warn('clicked edit btn');
       const [, firebaseKey] = e.target.id.split('--');
+      console.warn(firebaseKey);
 
-      getSingleAuthor(firebaseKey).then((authorObj) => addAuthorForm(authorObj));
+      getSingleAuthor(firebaseKey).then((authorObj) => {
+        console.warn(authorObj);
+        addAuthorForm(authorObj);
+      });
     }
   });
 };
