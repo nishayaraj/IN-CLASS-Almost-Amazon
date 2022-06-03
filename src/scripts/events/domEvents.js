@@ -30,6 +30,7 @@ const domEvents = (uid) => {
 
     // TODO: CLICK EVENT EDITING/UPDATING A BOOK
     if (e.target.id.includes('edit-book-btn')) {
+      console.warn('clicked update btn');
       const [, firebaseKey] = e.target.id.split('--');
 
       getSingleBook(firebaseKey, uid).then((bookObj) => addBookForm(bookObj));

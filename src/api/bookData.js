@@ -1,5 +1,6 @@
 import axios from 'axios';
 import firebaseConfig from './apiKeys';
+import { getAuthors } from './authorData';
 // API CALLS FOR BOOKS
 
 const dbUrl = firebaseConfig.databaseURL;
@@ -48,7 +49,7 @@ const createBook = (bookObj) => new Promise((resolve, reject) => {
 // TODO: UPDATE BOOK
 const updateBook = (bookObj) => new Promise((resolve, reject) => {
   axios.patch(`${dbUrl}/books/${bookObj.firebaseKey}.json`, bookObj)
-    .then(() => getBooks().then(resolve))
+    .then(() => getBooks(bookObj).then(resolve))
     .catch((error) => reject(error));
 });
 
@@ -67,11 +68,17 @@ const booksOnSale = (uid) => new Promise((resolve, reject) => {
 // });
 
 // FILTER FAVORITE AUTHORS
-const favoriteAuthors = () => new Promise((resolve, reject) => {
-  axios.get(`${dbUrl}/authors.json?orderBy="favorite"&equalTo=true`)
-    .then((response) => resolve(Object.values(response.data)))
-    .catch((error) => reject(error));
+const favoriteAuthors = (uid) => new Promise((resolve, reject) => {
+  getAuthors(uid)
+    .then((authorsFav) => {
+      const favAuthors = authorsFav.filter((author) => author.favorite);
+      resolve(favAuthors);
+    }).catch((error) => reject(error));
 });
+
+//   axios.get(`${dbUrl}/authors.json?orderBy="favorite"&equalTo=true`)
+//     .then((response) => resolve(Object.values(response.data)))
+//     .catch((error) => reject(error));
 
 // TODO: STRETCH...SEARCH BOOKS
 

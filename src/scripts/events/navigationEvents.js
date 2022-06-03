@@ -36,7 +36,7 @@ const navigationEvents = (uid) => {
 
     // FOVORITE AUTHORS
     document.querySelector('#favorite-authors').addEventListener('click', () => {
-      favoriteAuthors().then((authorsArray) => showAuthors(authorsArray));
+      favoriteAuthors(uid).then((authorsArray) => showAuthors(authorsArray));
     });
 
     // STRETCH: SEARCH
