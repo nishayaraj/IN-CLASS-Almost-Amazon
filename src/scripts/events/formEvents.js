@@ -35,7 +35,7 @@ const formEvents = (uid) => {
         uid
       };
 
-      updateBook(bookObject).then(showBooks);
+      updateBook(bookObject, uid).then(showBooks);
     }
 
     // FIXME: ADD CLICK EVENT FOR SUBMITTING FORM FOR ADDING AN AUTHOR
@@ -59,7 +59,7 @@ const formEvents = (uid) => {
         last_name: document.querySelector('#last_name').value,
         favorite: document.querySelector('#favorite').checked,
         firebaseKey,
-        uid,
+        uid
       };
 
       updateAuthor(authorObject).then(showAuthors);
