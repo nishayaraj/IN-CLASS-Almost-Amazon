@@ -1,23 +1,24 @@
 import { getAuthors } from '../../api/authorData';
-import { booksOnSale, getBooks } from '../../api/bookData';
+import { booksOnSale, getBooks, favoriteAuthors } from '../../api/bookData';
 import { showBooks } from '../components/pages/books';
 import signOut from '../helpers/auth/signOut';
 import { showAuthors, emptyAuthors } from '../components/pages/authors';
 
 // navigation events
-const navigationEvents = () => {
+const navigationEvents = (uid) => {
   // LOGOUT BUTTON
   document.querySelector('#logout-button')
     .addEventListener('click', signOut);
 
   // TODO: BOOKS ON SALE
   document.querySelector('#sale-books').addEventListener('click', () => {
-    booksOnSale().then((saleBooksArray) => showBooks(saleBooksArray));
+    booksOnSale(uid).then((saleBooksArray) => showBooks(saleBooksArray));
+    // find out how?
   });
 
   // TODO: ALL BOOKS
   document.querySelector('#all-books').addEventListener('click', () => {
-    getBooks().then((booksArray) => showBooks(booksArray));
+    getBooks(uid).then((booksArray) => showBooks(booksArray));
   });
 
   // FIXME: STUDENTS Create an event listener for the Authors
@@ -25,12 +26,17 @@ const navigationEvents = () => {
   // 2. Convert the response to an array because that is what the makeAuthors function is expecting
   // 3. If the array is empty because there are no authors, make sure to use the emptyAuthor function
   document.querySelector('#authors').addEventListener('click', () => {
-    getAuthors().then((authorsArray) => {
+    getAuthors(uid).then((authorsArray) => {
       if (authorsArray.length !== 0) {
         showAuthors(authorsArray);
       } else if (authorsArray.length === 0) {
         emptyAuthors(authorsArray);
       }
+    });
+
+    // FOVORITE AUTHORS
+    document.querySelector('#favorite-authors').addEventListener('click', () => {
+      favoriteAuthors(uid).then((authorsArray) => showAuthors(authorsArray));
     });
 
     // STRETCH: SEARCH

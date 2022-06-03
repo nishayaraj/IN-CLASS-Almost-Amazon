@@ -2,6 +2,8 @@ import clearDom from '../../helpers/clearDom';
 import renderToDOM from '../../helpers/renderToDom';
 
 const viewBook = (obj) => {
+  // eslint-disable-next-line no-console
+  console.log(obj);
   clearDom();
 
   const domString = `
