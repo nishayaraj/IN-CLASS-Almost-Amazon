@@ -5,7 +5,6 @@ import { viewBookDetails, viewAuthorDetails, deleteAuthorBooks } from '../../api
 import { showBooks } from '../components/pages/books';
 import viewBook from '../components/pages/viewBook';
 import viewAllBooksOfAuthor from '../components/pages/viewAllBooksOfAuthor';
-// import { deleteSingleAuthor } from '../../api/authorData';
 import { showAuthors } from '../components/pages/authors';
 import addBookForm from '../components/forms/addBookForm';
 import addAuthorForm from '../components/forms/addAuthorForm';
@@ -46,7 +45,6 @@ const domEvents = (uid) => {
       if (window.confirm('Want to delete?')) {
         // const [, firebaseKey] = e.target.id.split('--');
 
-        // deleteSingleAuthor(firebaseKey).then((authorsArray) => showAuthors(authorsArray));
         const [, firebaseKey] = e.target.id.split('--');
         deleteAuthorBooks(firebaseKey, uid).then(showAuthors);
       }

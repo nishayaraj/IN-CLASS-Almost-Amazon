@@ -35,7 +35,7 @@ const formEvents = (uid) => {
         uid
       };
 
-      updateBook(bookObject, uid).then(showBooks);
+      updateBook(bookObject).then(showBooks);
     }
 
     // FIXME: ADD CLICK EVENT FOR SUBMITTING FORM FOR ADDING AN AUTHOR
